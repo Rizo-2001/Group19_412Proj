@@ -7,7 +7,7 @@ from numpy import average
 app = Flask(__name__)
 app.secret_key = "Secret Key"
 app.config['SQLALCHEMY_DATABASE_URI'] = ('postgresql+psycopg2://postgres:Password1!@localhost:5432/Yellowstone_Data_Logs')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 
@@ -451,13 +451,12 @@ def rivers_update():
 
         return redirect(url_for('rivers'))
 
-@app.route('/river_delete/<river_name>/', methods = ['GET', 'POST'])
-def river_delete(rivers_name):
-
-    my_data = Rivers.query.get(rivers_name)
+@app.route('/rivers_delete/<river_name>/', methods = ['GET', 'POST'])
+def rivers_delete(river_name):
+    my_data = Rivers.query.get(river_name)
     db.session.delete(my_data)
     db.session.commit()
-    flash("Rivers Deleted Successfully")
+    flash("River Deleted Successfully")
 
     return redirect(url_for('rivers'))
 #--------------plants-------------------------------------------------------------------------
@@ -531,7 +530,7 @@ def plants_delete(scientific_name):
     return redirect(url_for('plants'))
 
 #--------------park_rangers-------------------------------------------------------------------------
-class Park_Rangers(db.Model):
+class ParkRangers(db.Model):
     ranger_name=db.Column(db.String, primary_key=True)
     age=db.Column(db.Integer)
     badge_num=db.Column(db.Integer)
@@ -543,7 +542,7 @@ class Park_Rangers(db.Model):
 
 @app.route('/park_rangers')
 def park_rangers():
-    park_rangers = Park_Rangers.query.all()
+    park_rangers = ParkRangers.query.all()
     return render_template("park_rangers.html", park_rangers = park_rangers)
 
 
@@ -560,7 +559,7 @@ def park_rangers_insert():
         post_location = request.form['post_location']
 
 
-        my_data = Park_Rangers(ranger_name, age, badge_num, num_of_years_worked, job_position, post_location, checkbox_bool, username)
+        my_data = ParkRangers(ranger_name, age, badge_num, num_of_years_worked, job_position, post_location, checkbox_bool, username)
         db.session.add(my_data)
         db.session.commit()
 
@@ -572,7 +571,7 @@ def park_rangers_insert():
 def park_rangers_update():
 
     if request.method == 'POST':
-        my_data = Park_Rangers.query.get(request.form.get('park_ranger_name'))
+        my_data = ParkRangers.query.get(request.form.get('park_ranger_name'))
 
         my_data.ranger_name = request.form['park_ranger_name']
         my_data.age = request.form['age']
@@ -588,7 +587,7 @@ def park_rangers_update():
 
 @app.route('/park_rangers_delete/<park_ranger_name>/', methods = ['GET', 'POST'])
 def park_rangers_delete(park_ranger_name):
-    my_data = Park_Rangers.query.get(park_ranger_name)
+    my_data = ParkRangers.query.get(park_ranger_name)
     db.session.delete(my_data)
     db.session.commit()
     flash("Park Ranger Deleted Successfully")
