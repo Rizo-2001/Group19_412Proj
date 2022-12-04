@@ -1,0 +1,36 @@
+.jumbotron{
+    background-size: cover; 
+    height: 550px;
+}
+
+.banner_title{
+    color: white; 
+    text-align: center;
+    padding-top: 200px;
+    font-size: 150px;
+    z-index: 20;
+    text-shadow: 0 1px 2px rgba(0,0,0,.6);
+}
+
+.banner_text{
+
+    padding-top : 250px; 
+    padding-left: 50px;
+    padding-right: 50px;
+    font-size: 20px;
+    color: white;
+}
+
+.container-fluid{
+    height:80px;
+
+}
+
+button:focus{
+    background-color: rgb(46, 113, 244);
+    color: white;
+}
+button{
+    margin-right: 10px;
+    margin-left: 10px;
+}

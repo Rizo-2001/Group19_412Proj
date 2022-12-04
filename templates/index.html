@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %} Home {% endblock %}
+
+{% block header %} 
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <!-- <img src="{{url_for('static', filename='bison.png')}}" alt="" style="height: 50px; padding-right: 10px;"> -->
+        <a class="navbar-brand" href="index.html">Yellowstone National Park Database</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" href="/">Home</a>
+              <!-- <a class="nav-link " href="/park_rangers">Park Rangers</a>
+              <a class="nav-link" href="/trails">Trails</a>
+              <a class="nav-link" href="/rivers">Rivers</a>
+              <a class="nav-link" href="/geysers">Geysers</a>
+              <a class="nav-link" href="/plants">Plants</a>-->
+              <a class="nav-link" href="/animals">Animals</a> 
+              <a class="nav-link" href="/mammals">Mammals</a>
+              <!-- <a class="nav-link" href="/birds">Birds</a>
+              <a class="nav-link" href="/fish">Fish</a>
+              <a class="nav-link" href="/login">Login</a> -->
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+
+{% block body %}
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner" style=" width:100%; height:750px; transition: .3 ease-in;">
+        <div class="carousel-item active">
+            <img src="{{url_for('static', filename='2811965.jpg')}}" class="d-block w-100" alt="..." style="height: 750px;">
+        </div>
+        <div class="carousel-item">
+            <img src="{{url_for('static', filename='2812071.jpg')}}" class="d-block w-100" alt="..." style="height: 750px;">
+        </div>
+        <div class="carousel-item">
+            <img src="{{url_for('static', filename='carousel_1.jpeg')}}" class="d-block w-100" alt="..." style="height: 750px;">
+        </div>
+        <div class="carousel-item">
+            <img src="{{url_for('static', filename='carousel_2.jpeg')}}" class="d-block w-100" alt="..." style="height: 750px;">
+        </div>
+    </div>
+</div>
+<h1>Welcome to the Yellowstone Nationa Park Database</h1>
+<p>On March 1, 1872, Yellowstone became the first national park. Every year, many visitors come to explore 2.2 million acres of the beautiful land and its wildlife. We have park rangers located in every region if you need a map or have any other questions. When you visit please keep your distance from the geysers and do not disrupt any of the wildlife, which includes touching and feeding animals. Thank you.</p>
+
+{% endblock %}

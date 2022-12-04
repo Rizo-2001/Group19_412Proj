@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+ 
+ 
+ 
+{% block title %} Mammals {% endblock %}
+
+{% block header %} 
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <!-- <img src="{{url_for('static', filename='bison.png')}}" alt="" style="height: 50px; padding-right: 10px;"> -->
+        <a class="navbar-brand" href="index.html">Yellowstone National Park Database</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link" href="/">Home</a>
+              <!-- <a class="nav-link " href="/park_rangers">Park Rangers</a>
+              <a class="nav-link" href="/trails">Trails</a>
+              <a class="nav-link" href="/rivers">Rivers</a>
+              <a class="nav-link" href="/geysers">Geysers</a>
+              <a class="nav-link" href="/plants">Plants</a>-->
+              <a class="nav-link" href="/animals">Animals</a> 
+              <a class="nav-link active" href="/mammals">Mammals</a>
+              <!-- <a class="nav-link" href="/birds">Birds</a>-->
+              <a class="nav-link" href="/fish">Fish</a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+{% block body %}
+<div class="jumbotron" style="background-image: url(/static/mammals_banner.png)"> 
+    <h1 class="banner_title">Mammals</h1>
+   
+  </div>
+<div class="container">
+    <div class="mammals">
+        <div class="col md-12">
+
+            <h2>Manage <b>Mammals </b>  <button type="button"  class="btn btn-success float-right"
+                data-toggle="modal" data-target="#mymodal">Add New Mammals</button> </h2>
+
+                {% with messages = get_flashed_messages() %}
+ 
+                {% if messages %}
+ 
+                {% for message in messages %}
+ 
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+ 
+ 
+                {{message}}
+
+                </div>
+ 
+                {% endfor %}
+ 
+                {% endif %}
+                {% endwith %}
+
+            <table class="table table-hover table-dark" style = 'width: 100%;'>
+                <tr>
+                    <th>Scientific Name</th>
+                    <th>Common Name</th>
+                    <th>Hibernates</th>
+                    <th>Offspring Count</th>
+                    <th>Action</th>
+                </tr>
+
+
+                {% for mammals in mammals %}
+
+                <tr>
+                    <td>{{mammals.m_scientific_name}}</td>
+                    <td>{{mammals.m_common_name}}</td>
+                    <td>{{mammals.hibernates}}</td>
+                    <td>{{mammals.offspring_count}}</td>
+                    <td>
+                        <a href="/mammal_update/{{mammals.m_scientific_name}}" class="btn btn-warning btn-xs" data-toggle="modal" 
+                        data-target="#modaledit">Edit</a>
+                        <a href="/mammal_delete/{{mammals.m_scientific_name}}" class="btn btn-danger btn-xs" 
+                        on-click="return confirm('Are You Sure?')">Delete</a>
+                    </td>
+                </tr>
+
+
+                <!-- Modal Edit Employee-->
+                <div id="modaledit{{mammals.m_scientific_name}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Edit Mammal</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{url_for('mammal_update')}}" method="POST">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="m_scientific_name">Scientific Name</label>
+                                            <input type="text" class="form-control" id="m_scientific_name" name="m_scientific_name" value="{{mammals.m_scientific_name}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="m_common_name">Common Name</label>
+                                            <input type="text" class="form-control" id="m_common_name" name="m_common_name" value="{{mammals.m_common_name}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="hibernates">Hibernates</label>
+                                            <input type="text" class="form-control" id="hibernates" name="hibernates" value="{{mammals.hibernates}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="offspring_count">Offspring Count</label>
+                                            <input type="text" class="form-control" id="offspring_count" name="offspring_count" value="{{mammals.offspring_count}}">
+                                        </div>
+
+                                        <div class="form-group"> <!--Closed?-->
+                                            <button class="btn btn-primary" type="submit">Update</button>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+            </table>
+        </div>
+
+        <!--Modal Add-->
+
+        <div id="mymodal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Mammal</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{url_for('mammal_insert')}}" method="POST">
+
+                            <div class="form-group">
+                                <label>Scientific Name:</label>
+                                <input type="text" class="form-control" name="scientific_name" required="1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Common Name:</label>
+                                <input type="text" class="form-control" name="common_name" required="1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Hibernates:</label>
+                                <input type="checkbox"  name="hibernates">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Offspring Count:</label>
+                                <input type="text" class="form-control" name="offspring_count" required="1">
+                            </div>
+                            <div class="form-group">
+
+
+                                <button class="btn btn-primary" type="submit">Add Animal</button>
+
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
