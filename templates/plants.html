@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+ 
+ 
+ 
+{% block title %} Plants {% endblock %}
+
+{% block header %} 
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <img src="{{url_for('static', filename='bison.png')}}" alt="" style="height: 50px; padding-right: 10px;">
+        <a class="navbar-brand" href="index.html">Yellowstone National Park Database</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link" href="/">Home</a>
+              <a class="nav-link " href="/park_rangers">Park Rangers</a>
+              <a class="nav-link" href="/trails">Trails</a>
+              <a class="nav-link" href="/rivers">Rivers</a>
+              <a class="nav-link" href="/geysers">Geysers</a>
+              <a class="nav-link active" href="/plants">Plants</a>
+              <a class="nav-link" href="/animals">Animals</a> 
+              <a class="nav-link" href="/mammals">Mammals</a>
+              <a class="nav-link" href="/birds">Birds</a>
+              <a class="nav-link" href="/fish">Fish</a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+{% block body %}
+<div class="jumbotron" style="background-image: url(/static/plants_banner.jpeg);"> 
+    <h1 class="banner_title">Plants</h1>
+    <p> </p>
+  </div>
+    <div class="plants">
+        <div class="col md-12">
+
+            <h2>Manage <b>Plants </b>  <button type="button"  class="btn btn-success float-right"
+                data-toggle="modal" data-target="#mymodal">Add New Plant</button> </h2>
+
+                {% with messages = get_flashed_messages() %}
+ 
+                {% if messages %}
+ 
+                {% for message in messages %}
+ 
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+ 
+ 
+                {{message}}
+
+                </div>
+ 
+                {% endfor %}
+ 
+                {% endif %}
+                {% endwith %}
+
+            <table class="table table-hover table-dark" style = 'width: 100%;'>
+                <tr>
+                    <th>Scientific Name</th>
+                    <th>Common Name</th>
+                    <th>Is Poisonous</th>
+                    <th>Environment</th>
+                    <th>Along Trail</th>
+                    <th>Action</th>
+                </tr>
+
+
+                {% for plants in plants %}
+
+                <tr>
+                    <td>{{plants.scientific_name}}</td>
+                    <td>{{plants.common_name}}</td>
+                    <td>{{plants.poisonous}}</td>
+                    <td>{{plants.environment}}</td>
+                    <td>{{plants.p_trail_name}}</td>
+                    <td>
+                        <a href="/update/{{plants.scientific_name}}" class="btn btn-warning btn-xs" data-toggle="modal" 
+                        data-target="#modaledit">Edit</a>
+                        <a href="/plants_delete/{{plants.scientific_name}}" class="btn btn-danger btn-xs" 
+                        on-click="return confirm('Are You Sure?')">Delete</a>
+                    </td>
+                </tr>
+
+
+                <!-- Modal Edit Employee-->
+                <div id="modaledit{{plants.scientific_name}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Edit Bird</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{url_for('plants_update')}}" method="POST">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="m_scientific_name">Scientific Name</label>
+                                            <input type="text" class="form-control" id="scientific_name" name="scientific_name" value="{{plants.scientific_name}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="m_common_name">Common Name</label>
+                                            <input type="checkbox" class="form-control" id="common_name" name="common_name" value="{{plants.common_name}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="minimum_catch_size">Poisonous</label>
+                                            <input type="checkbox" name="poisonous" value="{{plants.poisonous}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="legal_catch_season">Environment</label>
+                                            <input type="text" class="form-control" id="environment" name="environment" value="{{plants.environment}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="legal_catch_season">Along Trail</label>
+                                            <input type="text" class="form-control" id="along_trail" name="along_trail" value="{{plants.environment}}">
+                                        </div>
+
+                                        <div class="form-group"> <!--Closed?-->
+                                            <button class="btn btn-primary" type="submit">Update</button>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+            </table>
+        </div>
+
+        <!--Modal Add-->
+
+        <div id="mymodal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Plant</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{url_for('plants_insert')}}" method="POST">
+
+                            <div class="form-group">
+                                <label>Scientific Name:</label>
+                                <input type="text" class="form-control" name="scientific_name" required="1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Common Name:</label>
+                                <input type="text" class="form-control" name="common_name" >
+                            </div>
+
+                            
+
+                            <div class="form-group">
+                                <label>Poisonous:</label>
+                                <input type="checkbox" name="poisonous" >
+                            </div>
+
+                            <div class="form-group">
+                                <label>Environment:</label>
+                                <input type="text" class="form-control" name="environment">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Along Trail:</label>
+                                <input type="text" class="form-control" name="along_trail">
+                            </div>
+                            <div class="form-group">
+
+
+                                <button class="btn btn-primary" type="submit">Add Plant</button>
+
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -7,7 +7,7 @@
 {% block header %} 
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <!-- <img src="{{url_for('static', filename='bison.png')}}" alt="" style="height: 50px; padding-right: 10px;"> -->
+        <img src="{{url_for('static', filename='bison.png')}}" alt="" style="height: 50px; padding-right: 10px;">
         <a class="navbar-brand" href="index.html">Yellowstone National Park Database</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,14 +16,14 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link" href="/">Home</a>
-              <!-- <a class="nav-link " href="/park_rangers">Park Rangers</a>
+              <a class="nav-link " href="/park_rangers">Park Rangers</a>
               <a class="nav-link" href="/trails">Trails</a>
               <a class="nav-link" href="/rivers">Rivers</a>
               <a class="nav-link" href="/geysers">Geysers</a>
-              <a class="nav-link" href="/plants">Plants</a>-->
+              <a class="nav-link" href="/plants">Plants</a>
               <a class="nav-link" href="/animals">Animals</a> 
               <a class="nav-link active" href="/mammals">Mammals</a>
-              <!-- <a class="nav-link" href="/birds">Birds</a>-->
+              <a class="nav-link" href="/birds">Birds</a>
               <a class="nav-link" href="/fish">Fish</a>
             </div>
         </div>
@@ -111,7 +111,7 @@
 
                                         <div class="form-group">
                                             <label for="hibernates">Hibernates</label>
-                                            <input type="text" class="form-control" id="hibernates" name="hibernates" value="{{mammals.hibernates}}">
+                                            <input type="checkbox" class="form-control" id="hibernates" name="hibernates" value="{{mammals.hibernates}}">
                                         </div>
 
                                         <div class="form-group">

@@ -1,6 +1,8 @@
 from email.policy import default
+from os import environ
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
+from numpy import average
 
 app = Flask(__name__)
 app.secret_key = "Secret Key"
@@ -59,19 +61,19 @@ def insert():
 def update():
 
     if request.method == 'POST':
-        my_data = Animals.query.get(request.form.get('a_scientific_name'))
+        my_data = Animals.query.filter_by(a_scientific_name=request.form.get('a_scientific_name')).first()
 
-        my_data.a_scientific_name = request.form['a_scientific_name']
-        my_data.a_common_name = request.form['a_common_name']
+        my_data.scientific_name = request.form['a_scientific_name']
+        my_data.common_name = request.form['a_common_name']
         my_data.diet = request.form['diet']
-        my_data.m_season = request.form['mating_season']
+        my_data.mating_season = request.form['mating_season']
         my_data.population = request.form['population']
-        my_data.endangerment = request.form['endangerment']
+        my_data.extinction_threat = request.form['endangerment']
 
         db.session.commit()
         flash("Animal Updated Successfully")
 
-        return redirect(url_for('animals'))
+        
 
 @app.route('/delete/<a_scientific_name>/', methods = ['GET', 'POST'])
 def delete(a_scientific_name):
@@ -123,11 +125,11 @@ def mammal_insert():
 
         return redirect(url_for('mammals'))
 
-@app.route('/mammal_update/<m_scientific_name>/', methods = ['GET', 'POST'])
-def mammal_update(m_scientific_name):
+@app.route('/mammal_update', methods = ['GET', 'POST'])
+def mammal_update():
 
     if request.method == 'POST':
-        my_data = Mammals.query.get(m_scientific_name)
+        my_data = Mammals.query.get(request.form.get('m_scientific_name'))
 
         my_data.s_name = request.form['scientific_name']
         my_data.c_name = request.form['common_name']
@@ -239,7 +241,7 @@ def trails_insert():
         nearest_post_location = request.form['nearest_post_location']
 
 
-        my_data = Fish(t_name, experience_level, mile_length, elevation_peak_ft, nearest_post_location)
+        my_data = Trails(t_name, experience_level, mile_length, elevation_peak_ft, nearest_post_location)
         db.session.add(my_data)
         db.session.commit()
 
@@ -253,10 +255,11 @@ def trails_update():
     if request.method == 'POST':
         my_data = Trails.query.get(request.form.get('f_scientific_name'))
 
-        my_data.s_name = request.form['scientific_name']
-        my_data.c_name = request.form['common_name']
-        my_data.minimum_catch_size = request.form['minimum_catch_size']
-        my_data.legal_catch_season = request.form['legal_catch_season']
+        my_data.t_name = request.form['trail_name']
+        my_data.exp_level = request.form['experience_level']
+        my_data.mile_length = request.form['mile_length']
+        my_data.elevation_peak = request.form['elevation_peak_ft']
+        my_data.nearest_post = request.form['nearest_post_location']
 
         db.session.commit()
         flash("Trail Updated Successfully")
@@ -284,6 +287,53 @@ class Bird(db.Model):
         self.migration = migration
         self.coloration = coloration
 
+@app.route('/birds')
+def bird():
+    bird = Bird.query.all()
+    return render_template("birds.html", bird = bird)
+
+@app.route('/bird_insert', methods = ['POST'])
+def bird_insert():
+
+    if request.method == 'POST':
+        s_name = request.form['scientific_name']
+        c_name = request.form['common_name']
+        migration = request.form['migration']
+        coloration = request.form['coloration']
+
+
+        my_data = Bird(s_name, c_name, migration, coloration)
+        db.session.add(my_data)
+        db.session.commit()
+
+        flash("Bird Inserted Successfully")
+
+        return redirect(url_for('bird'))
+
+@app.route('/bird_update', methods = ['GET', 'POST'])
+def bird_update():
+
+    if request.method == 'POST':
+        my_data = Bird.query.get(request.form.get('b_scientific_name'))
+
+        my_data.s_name = request.form['scientific_name']
+        my_data.c_name = request.form['common_name']
+        my_data.migraiton = request.form['migration']
+        my_data.coloration = request.form['coloration']
+
+        db.session.commit()
+        flash("Bird Updated Successfully")
+
+        return redirect(url_for('bird'))
+
+@app.route('/bird_delete/<b_scientific_name>/', methods = ['GET', 'POST'])
+def bird_delete(b_scientific_name):
+    my_data = Bird.query.get(b_scientific_name)
+    db.session.delete(my_data)
+    db.session.commit()
+    flash("Bird Deleted Successfully")
+
+    return redirect(url_for('bird'))
 
 #--------------geyser-------------------------------------------------------------------------
 class Geysers(db.Model):
@@ -297,6 +347,58 @@ class Geysers(db.Model):
         self.average_height = average_height
         self.is_active = is_active
         self.g_trail_name = g_trail_name
+
+@app.route('/geysers')
+def geysers():
+    geysers = Geysers.query.all()
+    return render_template("geysers.html", geysers = geysers)
+
+@app.route('/geysers_insert', methods = ['POST'])
+def geysers_insert():
+
+    if request.method == 'POST':
+        is_checked = request.form.get('is_active')
+        if is_checked == 'on':
+            checkbox_bool = True
+        else:
+            checkbox_bool = False
+        geyser_name = request.form['geyser_name']
+        average_height = request.form['average_height']
+        along_trail = request.form['along_trail']
+
+
+        my_data = Geysers(geyser_name, average_height, checkbox_bool, along_trail)
+        db.session.add(my_data)
+        db.session.commit()
+
+        flash("Geyser Inserted Successfully")
+
+        return redirect(url_for('geysers'))
+
+@app.route('/geysers_update', methods = ['GET', 'POST'])
+def geysers_update():
+
+    if request.method == 'POST':
+        my_data = Geysers.query.get(request.form.get('geyser_name'))
+
+        my_data.scientific_name = request.form['geyser_name']
+        my_data.common_name = request.form['common_name']
+        my_data.poisonous = request.form['poisonous']
+        my_data.p_trail_name = request.form['along_trail']
+
+        db.session.commit()
+        flash("Plants Updated Successfully")
+
+        return redirect(url_for('geysers'))
+
+@app.route('/geysers_delete/<geyser_name>/', methods = ['GET', 'POST'])
+def geysers_delete(geyser_name):
+    my_data = Geysers.query.get(geyser_name)
+    db.session.delete(my_data)
+    db.session.commit()
+    flash("Geyser Deleted Successfully")
+
+    return redirect(url_for('geysers'))
 #--------------rivers-------------------------------------------------------------------------
 class Rivers(db.Model):
     river_name=db.Column(db.String, primary_key=True)
@@ -309,6 +411,55 @@ class Rivers(db.Model):
         self.depth = depth
         self.river_length = river_length
         self.r_trail_name = r_trail_name
+
+@app.route('/rivers')
+def rivers():
+    rivers = Rivers.query.all()
+    return render_template("rivers.html", rivers = rivers)
+
+@app.route('/rivers_insert', methods = ['POST'])
+def rivers_insert():
+
+    if request.method == 'POST':
+        river_name = request.form['river_name']
+        depth = request.form['depth']
+        river_length = request.form['river_length']
+        along_trail = request.form['along_trail']
+
+
+        my_data = Rivers(river_name, depth, river_length, along_trail)
+        db.session.add(my_data)
+        db.session.commit()
+
+        flash("River Inserted Successfully")
+
+        return redirect(url_for('rivers'))
+
+@app.route('/rivers_update', methods = ['GET', 'POST'])
+def rivers_update():
+
+    if request.method == 'POST':
+        my_data = Rivers.query.get(request.form.get('rivers_name'))
+
+        my_data.river_name = request.form['river_name']
+        my_data.depth = request.form['depth']
+        my_data.river_length = request.form['river_length']
+        my_data.r_trail_name = request.form['along_trail']
+
+        db.session.commit()
+        flash("River Updated Successfully")
+
+        return redirect(url_for('rivers'))
+
+@app.route('/river_delete/<river_name>/', methods = ['GET', 'POST'])
+def river_delete(rivers_name):
+
+    my_data = Rivers.query.get(rivers_name)
+    db.session.delete(my_data)
+    db.session.commit()
+    flash("Rivers Deleted Successfully")
+
+    return redirect(url_for('rivers'))
 #--------------plants-------------------------------------------------------------------------
 class Plants(db.Model):
     scientific_name=db.Column(db.String, primary_key=True)
@@ -323,6 +474,126 @@ class Plants(db.Model):
         self.poisonous = poisonous
         self.environment = environment
         self.p_trail_name = p_trail_name
+
+@app.route('/plants')
+def plants():
+    plants = Plants.query.all()
+    return render_template("plants.html", plants = plants)
+
+
+@app.route('/plants_insert', methods = ['POST'])
+def plants_insert():
+
+    if request.method == 'POST':
+        is_checked = request.form.get('poisonous')
+        if is_checked == 'on':
+            checkbox_bool = True
+        else:
+            checkbox_bool = False
+        s_name = request.form['scientific_name']
+        c_name = request.form['common_name']
+        environment = request.form['environment']
+        along_trail = request.form['along_trail']
+
+
+        my_data = Plants(s_name, c_name, checkbox_bool, environment, along_trail)
+        db.session.add(my_data)
+        db.session.commit()
+
+        flash("Plant Inserted Successfully")
+
+        return redirect(url_for('plants'))
+
+@app.route('/plants_update', methods = ['GET', 'POST'])
+def plants_update():
+
+    if request.method == 'POST':
+        my_data = Plants.query.get(request.form.get('scientific_name'))
+
+        my_data.scientific_name = request.form['scientific_name']
+        my_data.common_name = request.form['common_name']
+        my_data.poisonous = request.form['poisonous']
+        my_data.environment = request.form['environment']
+        my_data.p_trail_name = request.form['along_trail']
+
+        db.session.commit()
+        flash("Plants Updated Successfully")
+
+        return redirect(url_for('plants'))
+
+@app.route('/plants_delete/<scientific_name>/', methods = ['GET', 'POST'])
+def plants_delete(scientific_name):
+    my_data = Plants.query.get(scientific_name)
+    db.session.delete(my_data)
+    db.session.commit()
+    flash("Plants Deleted Successfully")
+
+    return redirect(url_for('plants'))
+
+#--------------park_rangers-------------------------------------------------------------------------
+class Park_Rangers(db.Model):
+    ranger_name=db.Column(db.String, primary_key=True)
+    age=db.Column(db.Integer)
+    badge_num=db.Column(db.Integer)
+    num_of_years_worked=db.Column(db.Integer)
+    job_position=db.Column(db.String)
+    post_location=db.Column(db.String)
+    is_admin=db.Column(db.Boolean)
+    userrname=db.Column(db.String)
+
+@app.route('/park_rangers')
+def park_rangers():
+    park_rangers = Park_Rangers.query.all()
+    return render_template("park_rangers.html", park_rangers = park_rangers)
+
+
+@app.route('/park_rangers_insert', methods = ['POST'])
+def park_rangers_insert():
+
+        checkbox_bool = True
+        username = 'aaa'
+        ranger_name = request.form['park_ranger_name']
+        age = request.form['age']
+        badge_num = request.form['badge_num']
+        num_of_years_worked = request.form['num_of_years_worked']
+        job_position = request.form['job_position']
+        post_location = request.form['post_location']
+
+
+        my_data = Park_Rangers(ranger_name, age, badge_num, num_of_years_worked, job_position, post_location, checkbox_bool, username)
+        db.session.add(my_data)
+        db.session.commit()
+
+        flash("Park Ranger Inserted Successfully")
+
+        return redirect(url_for('park_rangers'))
+
+@app.route('/park_rangers_update', methods = ['GET', 'POST'])
+def park_rangers_update():
+
+    if request.method == 'POST':
+        my_data = Park_Rangers.query.get(request.form.get('park_ranger_name'))
+
+        my_data.ranger_name = request.form['park_ranger_name']
+        my_data.age = request.form['age']
+        my_data.badge_num = request.form['badge_num']
+        my_data.num_of_years_worked = request.form['num_of_years_worked']
+        my_data.job_position = request.form['job_position']
+        my_data.post_location = request.form['post_location']
+
+        db.session.commit()
+        flash("Park Ranger Updated Successfully")
+
+        return redirect(url_for('park_rangers'))
+
+@app.route('/park_rangers_delete/<park_ranger_name>/', methods = ['GET', 'POST'])
+def park_rangers_delete(park_ranger_name):
+    my_data = Park_Rangers.query.get(park_ranger_name)
+    db.session.delete(my_data)
+    db.session.commit()
+    flash("Park Ranger Deleted Successfully")
+
+    return redirect(url_for('park_rangers'))
 
 if __name__ == "__main__":
     app.run(debug = True, port=8000)

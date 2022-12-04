@@ -2,12 +2,12 @@
  
  
  
-{% block title %} Fish {% endblock %}
+{% block title %} Birds {% endblock %}
 
 {% block header %} 
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <!-- <img src="{{url_for('static', filename='bison.png')}}" alt="" style="height: 50px; padding-right: 10px;"> -->
+        <img src="{{url_for('static', filename='bison.png')}}" alt="" style="height: 50px; padding-right: 10px;">
         <a class="navbar-brand" href="index.html">Yellowstone National Park Database</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,24 +23,24 @@
               <a class="nav-link" href="/plants">Plants</a>
               <a class="nav-link" href="/animals">Animals</a> 
               <a class="nav-link" href="/mammals">Mammals</a>
-              <a class="nav-link" href="/birds">Birds</a>
-              <a class="nav-link active" href="/fish">Fish</a>
+              <a class="nav-link active" href="/birds">Birds</a>
+              <a class="nav-link" href="/fish">Fish</a>
             </div>
         </div>
     </div>
 </nav>
 {% endblock %}
 {% block body %}
-<div class="jumbotron" style="background-image: url(/static/fish_banner.png);"> 
-    <h1 class="banner_title">Fish</h1>
+<div class="jumbotron" style="background-image: url(/static/bird_banner.png);"> 
+    <h1 class="banner_title">Birds</h1>
     <p> </p>
   </div>
 <div class="container">
-    <div class="fish">
+    <div class="bird">
         <div class="col md-12">
 
-            <h2>Manage <b>Fish </b>  <button type="button"  class="btn btn-success float-right"
-                data-toggle="modal" data-target="#mymodal">Add New Fish</button> </h2>
+            <h2>Manage <b>Birds </b>  <button type="button"  class="btn btn-success float-right"
+                data-toggle="modal" data-target="#mymodal">Add New Bird</button> </h2>
 
                 {% with messages = get_flashed_messages() %}
  
@@ -67,56 +67,56 @@
                 <tr>
                     <th>Scientific Name</th>
                     <th>Common Name</th>
-                    <th>Minimum Catch Size (in)</th>
-                    <th>Legal Catch Season</th>
+                    <th>Migration</th>
+                    <th>Coloration</th>
                     <th>Action</th>
                 </tr>
 
 
-                {% for fish in fish %}
+                {% for bird in bird %}
 
                 <tr>
-                    <td>{{fish.f_scientific_name}}</td>
-                    <td>{{fish.f_common_name}}</td>
-                    <td>{{fish.minimum_catch_size}}</td>
-                    <td>{{fish.legal_catch_season}}</td>
+                    <td>{{bird.b_scientific_name}}</td>
+                    <td>{{bird.b_common_name}}</td>
+                    <td>{{bird.migration}}</td>
+                    <td>{{bird.coloration}}</td>
                     <td>
-                        <a href="/update/{{fish.f_scientific_name}}" class="btn btn-warning btn-xs" data-toggle="modal" 
+                        <a href="/update/{{bird.b_scientific_name}}" class="btn btn-warning btn-xs" data-toggle="modal" 
                         data-target="#modaledit">Edit</a>
-                        <a href="/delete/{{fish.f_scientific_name}}" class="btn btn-danger btn-xs" 
+                        <a href="/bird_delete/{{bird.b_scientific_name}}" class="btn btn-danger btn-xs" 
                         on-click="return confirm('Are You Sure?')">Delete</a>
                     </td>
                 </tr>
 
 
                 <!-- Modal Edit Employee-->
-                <div id="modaledit{{fish.f_scientific_name}}" class="modal fade" role="dialog">
+                <div id="modaledit{{bird.b_scientific_name}}" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Edit Mammal</h4>
+                                <h4 class="modal-title">Edit Bird</h4>
                             </div>
                             <div class="modal-body">
-                                <form action="{{url_for('fish_update')}}" method="POST">
+                                <form action="{{url_for('bird_update')}}" method="POST">
                                     <div class="form-group">
                                         <div class="form-group">
                                             <label for="m_scientific_name">Scientific Name</label>
-                                            <input type="text" class="form-control" id="m_scientific_name" name="m_scientific_name" value="{{fish.f_scientific_name}}">
+                                            <input type="text" class="form-control" id="m_scientific_name" name="m_scientific_name" value="{{bird.b_scientific_name}}">
                                         </div>
 
                                         <div class="form-group">
                                             <label for="m_common_name">Common Name</label>
-                                            <input type="text" class="form-control" id="m_common_name" name="m_common_name" value="{{fish.f_common_name}}">
+                                            <input type="text" class="form-control" id="m_common_name" name="m_common_name" value="{{bird.b_common_name}}">
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="minimum_catch_size">Minimum Catch Size</label>
-                                            <input type="text" class="form-control" id="minimum_catch_size" name="minimum_catch_size" value="{{fish.minimum_catch_size}}">
+                                            <label for="minimum_catch_size">Migration</label>
+                                            <input type="text" class="form-control" id="migration" name="migration" value="{{bird.migration}}">
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="legal_catch_season">Legal Catch Season</label>
-                                            <input type="text" class="form-control" id="legal_catch_season" name="legal_catch_season" value="{{fish.legal_catch_season}}">
+                                            <label for="legal_catch_season">Coloration</label>
+                                            <input type="text" class="form-control" id="coloration" name="coloration" value="{{bird.coloration}}">
                                         </div>
 
                                         <div class="form-group"> <!--Closed?-->
@@ -142,10 +142,10 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Fish</h4>
+                        <h4 class="modal-title">Add Bird</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="{{url_for('fish_insert')}}" method="POST">
+                        <form action="{{url_for('bird_insert')}}" method="POST">
 
                             <div class="form-group">
                                 <label>Scientific Name:</label>
@@ -160,18 +160,18 @@
                             
 
                             <div class="form-group">
-                                <label>Minimum Catch Size:</label>
-                                <input type="text" class="form-control" name="minimum_catch_size" >
+                                <label>Migration:</label>
+                                <input type="text" class="form-control" name="migration" >
                             </div>
 
                             <div class="form-group">
-                                <label>Legal Catch Season:</label>
-                                <input type="text" class="form-control" name="legal_catch_season">
+                                <label>Coloration:</label>
+                                <input type="text" class="form-control" name="coloration">
                             </div>
                             <div class="form-group">
 
 
-                                <button class="btn btn-primary" type="submit">Add Fish</button>
+                                <button class="btn btn-primary" type="submit">Add Bird</button>
 
 
                             </div>

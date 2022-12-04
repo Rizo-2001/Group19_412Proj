@@ -2,12 +2,12 @@
  
  
  
-{% block title %} Fish {% endblock %}
+{% block title %} Trails {% endblock %}
 
 {% block header %} 
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <!-- <img src="{{url_for('static', filename='bison.png')}}" alt="" style="height: 50px; padding-right: 10px;"> -->
+        <img src="{{url_for('static', filename='bison.png')}}" alt="" style="height: 50px; padding-right: 10px;">
         <a class="navbar-brand" href="index.html">Yellowstone National Park Database</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,16 +31,16 @@
 </nav>
 {% endblock %}
 {% block body %}
-<div class="jumbotron" style="background-image: url(/static/fish_banner.png);"> 
-    <h1 class="banner_title">Fish</h1>
+<div class="jumbotron" style="background-image: url(/static/trails_banner.jpg);"> 
+    <h1 class="banner_title">Trails</h1>
     <p> </p>
   </div>
 <div class="container">
-    <div class="fish">
+    <div class="trails">
         <div class="col md-12">
 
             <h2>Manage <b>Trails </b>  <button type="button"  class="btn btn-success float-right"
-                data-toggle="modal" data-target="#mymodal">Add New Fish</button> </h2>
+                data-toggle="modal" data-target="#mymodal">Add New Trail</button> </h2>
 
                 {% with messages = get_flashed_messages() %}
  
@@ -86,7 +86,7 @@
                         <a href="/trails_update/{{trails.trail_name}}" class="btn btn-warning btn-xs" data-toggle="modal" 
                         data-target="#modaledit">Edit</a>
                         <a href="/trails_delete/{{trails.trail_name}}" class="btn btn-danger btn-xs" 
-                        on-click="return confirm('Are You Sure?')">Delete</a>
+                        onclick="return confirm('Are You Sure You Want To Delete?')">Delete</a>
                     </td>
                 </tr>
 
@@ -102,23 +102,28 @@
                                 <form action="{{url_for('trails_update')}}" method="POST">
                                     <div class="form-group">
                                         <div class="form-group">
-                                            <label for="m_scientific_name">Scientific Name</label>
-                                            <input type="text" class="form-control" id="m_scientific_name" name="m_scientific_name" value="{{fish.f_scientific_name}}">
+                                            <label for="m_scientific_name">Trail Name</label>
+                                            <input type="text" class="form-control" id="trail_name" name="trail_name" value="{{trails.trail_name}}">
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="m_common_name">Common Name</label>
-                                            <input type="text" class="form-control" id="m_common_name" name="m_common_name" value="{{fish.f_common_name}}">
+                                            <label for="m_common_name">Experience Level:</label>
+                                            <input type="text" class="form-control" id="experience_level" name="experience_level" value="{{trails.experience_level}}">
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="minimum_catch_size">Minimum Catch Size</label>
-                                            <input type="text" class="form-control" id="minimum_catch_size" name="minimum_catch_size" value="{{fish.minimum_catch_size}}">
+                                            <label for="minimum_catch_size">Length (mi):</label>
+                                            <input type="text" class="form-control" id="mile_length" name="mile_length" value="{{trails.mile_length}}">
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="legal_catch_season">Legal Catch Season</label>
-                                            <input type="text" class="form-control" id="legal_catch_season" name="legal_catch_season" value="{{fish.legal_catch_season}}">
+                                            <label for="legal_catch_season">Elevation Peak (ft):</label>
+                                            <input type="text" class="form-control" id="elevation_peak_ft" name="elevation_peak_ft" value="{{trails.elevation_peak_ft}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="legal_catch_season">Nearest Post:</label>
+                                            <input type="text" class="form-control" id="nearest_post_location" name="nearest_post_location" value="{{trails.nearest_post_location}}">
                                         </div>
 
                                         <div class="form-group"> <!--Closed?-->
@@ -144,10 +149,10 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add Fish</h4>
+                        <h4 class="modal-title">Add Trail</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="{{url_for('fish_insert')}}" method="POST">
+                        <form action="{{url_for('trails_insert')}}" method="POST">
 
                             <div class="form-group">
                                 <label>Trail Name:</label>

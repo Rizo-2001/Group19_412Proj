@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 
-
-
-{% block title %} Home {% endblock %}
+{% block title %} Animals {% endblock %}
 
 {% block header %} 
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-        <!-- <img src="{{url_for('static', filename='bison.png')}}" alt="" style="height: 50px; padding-right: 10px;"> -->
+        <img src="{{url_for('static', filename='bison.png')}}" alt="" style="height: 50px; padding-right: 10px;">
         <a class="navbar-brand" href="index.html">Yellowstone National Park Database</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,8 +96,7 @@
                             <td>{{animals.population}}</td>
                             <td>{{animals.extinction_threat}}</td>
                             <td>
-                                <a href="/update/{{animals.a_scientific_name}}" class="btn btn-warning btn-xs" data-toggle="modal"
-                                    data-target="#modaledit{{animals.a_scientific_name}}">Edit</a>
+                                <a href="/update/{{animals.a_scientific_name}}" class="btn btn-warning btn-xs" >Edit</a>
                                 <a href="/delete/{{animals.a_scientific_name}}" class="btn btn-danger btn-xs"
                                     onclick="return confirm('Are You Sure You Want To Delete?')">Delete</a>
     
@@ -114,7 +111,7 @@
 
 
                     <!-- Modal Edit Employee-->
-                    <div id="modaledit{{animals.a_scientific_name}}" class="modal fade" role="dialog">
+                    <div  class="modal fade" role="dialog">
                         <div class="modal-dialog">
 
 
@@ -151,7 +148,7 @@
             
             
                                                 <label>Common Name:</label>
-                                                <input type="text" class="form-control" name="a_common_name" required="1">
+                                                <input type="text" class="form-control" name="a_common_name" >
             
             
                                             </div>
@@ -161,7 +158,7 @@
             
             
                                                 <label>Diet:</label>
-                                                <input type="text" class="form-control" name="diet" required="1">
+                                                <input type="text" class="form-control" name="diet" >
             
             
                                             </div>
@@ -169,7 +166,7 @@
             
             
                                                 <label>Mating Season:</label>
-                                                <input type="text" class="form-control" name="mating_season" required="1">
+                                                <input type="text" class="form-control" name="mating_season" >
             
             
                                             </div>
@@ -177,7 +174,7 @@
             
             
                                                 <label>Population:</label>
-                                                <input type="text" class="form-control" name="population" required="1">
+                                                <input type="text" class="form-control" name="population">
             
             
                                             </div>
@@ -185,7 +182,7 @@
             
             
                                                 <label>Endangerment:</label>
-                                                <input type="text" class="form-control" name="endangerment" required="1">
+                                                <input type="text" class="form-control" name="endangerment">
             
             
                                             </div>
