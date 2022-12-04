@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% include 'header.html' %}
+ 
+ 
+ 
+{% block title %} Home {% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <div class="jumbotron p-3"></div>
+
+            <h2>Manage <b>Mammals </b>  <button type="button"  class="btn btn-success float-right"
+                data-toggle="modal" data-target="#mymodal">Add New Mammals</button> </h2>
+
+                {% with messages = get_flashed_messages() %}
+ 
+                {% if messages %}
+ 
+                {% for message in messages %}
+ 
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+ 
+ 
+                {{message}}
+
+                </div>
+ 
+                {% endfor %}
+ 
+                {% endif %}
+                {% endwith %}
+
+            <table class="table table-hover table-dark">
+                <tr>
+                    <th>Scientific Name</th>
+                    <th>Common Name</th>
+                    <th>Hibernates</th>
+                    <th>Offspring Count</th>
+                </tr>
+
+
+                {% for mammal in mammals %}
+
+                <tr>
+                    <td>{{mammal.m_scientific_name}}</td>
+                    <td>{{mammal.m_common_name}}</td>
+                    <td>{{mammal.hibernates}}</td>
+                    <td>{{mammal.offspring_count}}</td>
+
+                    <td>
+                        <a href="{{url_for('edit', id=mammal.id)}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit">Edit</a>
+                        <a href="{{url_for('delete', id=mammal.id)}}" class="btn btn-danger btn-xs" on-click="return confirm('Are You Sure?')">Delete</a>
+                    </td>
+                </tr>
+
+
+                <!-- Modal Edit Employee-->
+                <div id="modaledit{{row.m_scientific_name}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Edit Mammal</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{url_for('update')}}" method="POST">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label for="m_scientific_name">Scientific Name</label>
+                                            <input type="text" class="form-control" id="m_scientific_name" name="m_scientific_name" value="{{row.m_scientific_name}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="m_common_name">Common Name</label>
+                                            <input type="text" class="form-control" id="m_common_name" name="m_common_name" value="{{row.m_common_name}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="hibernates">Hibernates</label>
+                                            <input type="text" class="form-control" id="hibernates" name="hibernates" value="{{row.hibernates}}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="offspring_count">Offspring Count</label>
+                                            <input type="text" class="form-control" id="offspring_count" name="offspring_count" value="{{row.offspring_count}}">
+                                        </div>
+
+                                        <div class="form-group"> <!--Closed?-->
+                                            <button class="btn btn-primary" type="submit">Update</button>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+            </table>
+        </div>
+
+        <!--Modal Add-->
+
+        <div id="mymodal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Mammal</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{url_for('insert')}}" method="POST">
+
+                            <div class="form-group">
+                                <label>Scientific Name:</label>
+                                <input type="text" class="form-control" name="scientific_name" required="1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Common Name:</label>
+                                <input type="text" class="form-control" name="common_name" required="1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Hibernates:</label>
+                                <input type="text" class="form-control" name="hibernates" required="1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Offspring Count:</label>
+                                <input type="text" class="form-control" name="offspring_count" required="1">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
