@@ -1,0 +1,105 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.5
+-- Dumped by pg_dump version 14.5
+
+-- Started on 2022-12-04 23:50:48 MST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+DROP DATABASE "Yellowstone_Data_Logs";
+--
+-- TOC entry 3600 (class 1262 OID 40966)
+-- Name: Yellowstone_Data_Logs; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE "Yellowstone_Data_Logs" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'C';
+
+
+ALTER DATABASE "Yellowstone_Data_Logs" OWNER TO postgres;
+
+\connect "Yellowstone_Data_Logs"
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 213 (class 1259 OID 57547)
+-- Name: mammals; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.mammals (
+    m_scientific_name character varying(120) NOT NULL,
+    m_common_name character varying(120),
+    hibernates boolean,
+    offspring_count integer
+);
+
+
+ALTER TABLE public.mammals OWNER TO postgres;
+
+--
+-- TOC entry 3594 (class 0 OID 57547)
+-- Dependencies: 213
+-- Data for Name: mammals; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Odocoileus virginianus', 'white-tailed deer, White-tailed Deer', false, 2);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Canis latrans', 'Coyote', false, 7);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Canis lupus', 'Gray Wolf, Wolf', false, 10);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Vulpes vulpes', 'Red Fox', false, 5);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Lynx canadensis', 'Canada lynx, Canadian Lynx, lynx', false, 4);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Lynx rufus', 'Bobcat', false, 6);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Puma concolor', 'Cougar, mountain lion, Puma', false, 6);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Mephitis mephitis', 'Striped Skunk', false, 6);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Gulo gulo', 'Falserth American wolverine', false, 3);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Lutra canadensis', 'river otter', true, 3);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Martes americana', 'Pine Marten', true, 3);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Mustela erminea', 'ermine, short tailed weasel', true, 8);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Mustela frenata', 'Long-tailed Weasel', true, 8);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Taxidea taxus', 'American Badger, badger', true, 5);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Procyon lotor', 'common raccoon, Falserthern raccoon, Raccoon', false, 5);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Ursus americanus', 'American Black Bear, black bear', true, 3);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Ursus arctos horribilis', 'Grizzly Bear', true, 3);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Myotis thysanodes', 'Fringed Myotis', true, 1);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Myotis volans', 'Long-legged Myotis', true, 1);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Microtus longicaudus', 'Coronation Island vole, Long-tailed Vole', true, 6);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Antilocapra americana', 'antelope, pronghorn', false, 2);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Bison bisoner', 'bison, buffalo', false, 1);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('test', 'mountain goat, Mountain Goat, Rocky Mountain goat', false, 3);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Ovis canadensi', 'bighorn sheep, Bighorn Sheep', false, 3);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Alces alcess', 'Eurasian Elk, moose', false, 2);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Alces alces ', 'Yellowstone moose', false, 2);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Elaphus', 'Rocky Mountain Elk', false, 2);
+INSERT INTO public.mammals (m_scientific_name, m_common_name, hibernates, offspring_count) VALUES ('Odocoileus hemionuuus', 'mule deer, Mule Deer', false, 2);
+
+
+-- Completed on 2022-12-04 23:50:48 MST
+
+--
+-- PostgreSQL database dump complete
+--
+
