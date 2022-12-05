@@ -1,8 +1,9 @@
+
 {% extends 'base.html' %}
 
 {% block title %} Park Rangers {% endblock %}
 
-{% block header %} 
+{% block header %}
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
         <img src="{{url_for('static', filename='bison.png')}}" alt="" style="height: 50px; padding-right: 10px;">
@@ -14,12 +15,12 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link" href="/">Home</a>
-              <a class="nav-link active" href="/park_rangers">Park Rangers</a>
+              <!-- <a class="nav-link active" href="/park_rangers">Park Rangers</a> -->
               <a class="nav-link" href="/trails">Trails</a>
               <a class="nav-link" href="/rivers">Rivers</a>
               <a class="nav-link" href="/geysers">Geysers</a>
               <a class="nav-link" href="/plants">Plants</a>
-              <a class="nav-link" href="/animals">Animals</a> 
+              <a class="nav-link" href="/animals">Animals</a>
               <a class="nav-link" href="/mammals">Mammals</a>
               <a class="nav-link" href="/birds">Birds</a>
               <a class="nav-link" href="/fish">Fish</a>
@@ -31,11 +32,10 @@
 
 
 {% block body %}
-<div class="jumbotron" style="background-image: url(/static/park_ranger_banner.png);"> 
+<div class="jumbotron" style="background-image: url(/static/park_ranger_banner.jpeg);">
     <h1 class="banner_title">Park Rangers</h1>
 
   </div>
-<div class="container">
     <div class="parkrangers">
         <div class="col-md-12">
 
@@ -74,20 +74,20 @@
 
                     <tr>
 
-                        <th>Scientific Name</th>
-                        <th>Common Name</th>
-                        <th>Diet</th>
-                        <th>Mating Season</th>
-                        <th>Population</th>
-                        <th>Endangerment</th>
+                        <th>Ranger Name</th>
+                        <th>Age</th>
+                        <th>Badge Number</th>
+                        <th>Number of Years Worked</th>
+                        <th>Position</th>
+                        <th>Post Location</th>
                         <th>Action</th>
 
                     </tr>
 
 
-                    
+
                         {% for park_rangers in park_rangers %}
-        
+
                         <tr>
                             <td>{{park_rangers.ranger_name}}</td>
                             <td>{{park_rangers.age}}</td>
@@ -97,15 +97,15 @@
                             <td>{{park_rangers.post_location}}</td>
                             <td>
                                 <a href="/park_rangers_update/{{park_rangers.ranger_name}}" class="btn btn-warning btn-xs" >Edit</a>
-                                <a href="/park_rangers_delete/{{animals.ranger_name}}" class="btn btn-danger btn-xs"
+                                <a href="/park_rangers_delete/{{park_rangers.ranger_name}}" class="btn btn-danger btn-xs"
                                     onclick="return confirm('Are You Sure You Want To Delete?')">Delete</a>
-    
-    
+
+
                             </td>
                         </tr>
-                        
 
-                        
+
+
 
                     </tr>
 
@@ -139,52 +139,52 @@
 
                                                 <label>Scientific Name:</label>
                                                 <input type="text" class="form-control" name="a_scientific_name" required="1">
-            
-            
+
+
                                             </div>
-            
-            
+
+
                                             <div class="form-group">
-            
-            
+
+
                                                 <label>Common Name:</label>
                                                 <input type="text" class="form-control" name="a_common_name" >
-            
-            
+
+
                                             </div>
-            
-            
+
+
                                             <div class="form-group">
-            
-            
+
+
                                                 <label>Diet:</label>
                                                 <input type="text" class="form-control" name="diet" >
-            
-            
+
+
                                             </div>
                                             <div class="form-group">
-            
-            
+
+
                                                 <label>Mating Season:</label>
                                                 <input type="text" class="form-control" name="mating_season" >
-            
-            
+
+
                                             </div>
                                             <div class="form-group">
-            
-            
+
+
                                                 <label>Population:</label>
                                                 <input type="text" class="form-control" name="population">
-            
-            
+
+
                                             </div>
                                             <div class="form-group">
-            
-            
+
+
                                                 <label>Endangerment:</label>
                                                 <input type="text" class="form-control" name="endangerment">
-            
-            
+
+
                                             </div>
 
 
@@ -193,7 +193,7 @@
 
                                                 <button class="btn btn-primary" type="submit">Update</button>
 
-                                            
+
 
 
                                         </div>

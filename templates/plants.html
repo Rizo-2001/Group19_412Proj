@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link" href="/">Home</a>
-              <a class="nav-link " href="/park_rangers">Park Rangers</a>
+              <!-- <a class="nav-link " href="/park_rangers">Park Rangers</a> -->
               <a class="nav-link" href="/trails">Trails</a>
               <a class="nav-link" href="/rivers">Rivers</a>
               <a class="nav-link" href="/geysers">Geysers</a>
@@ -41,6 +41,56 @@
             <h2>Manage <b>Plants </b>  <button type="button"  class="btn btn-success float-right"
                 data-toggle="modal" data-target="#mymodal">Add New Plant</button> </h2>
 
+                <div class="row">
+                    <div class="col col-sm">
+                        <h3>Filter Poisonous:</h3>
+                    </div>
+                    <div class="col col-sm">
+                        <a href="/poison_filter1" class="btn btn-danger btn-xs">Filter by Poisonous</a>
+                    </div>
+                    <div class="col-sm">
+                        <a href="/poison_filter2" class="btn btn-danger btn-xs">Filter by Not Poisonous</a>
+                    </div>
+                    <div class="col-sm">
+                        
+                    </div>
+                    <div class="col-sm">
+                        
+                    </div>
+
+                </div>
+                <div class="row">
+        
+                </div>
+                <div class="row">
+                    <div class="col col-sm">
+                        <h3>Filter By Environment:</h3>
+                    </div>
+                    <div class="col col-sm">
+                        <a href="/diet_filter1" class="btn btn-danger btn-xs">Filter by Carnivore</a>
+                    </div>
+                    <div class="col-sm">
+                        <a href="/diet_filter2" class="btn btn-danger btn-xs">Filter by Omnivore</a>
+                    </div>
+                    <div class="col-sm">
+                        <a href="/diet_filter3" class="btn btn-danger btn-xs">Filter by Herbivore</a>
+                    </div>
+                    <div class="col-sm">
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-sm">
+                    </div>
+                    <div class="col col-sm"></div>
+                    <div class="col-sm"></div>
+                    <div class="col-sm">
+                    </div>
+                    <div class="col-sm">
+                        <a href="/animals" class="btn btn-danger btn-xs">Clear Filters</a>
+                    </div>
+        
+                </div>
                 {% with messages = get_flashed_messages() %}
  
                 {% if messages %}
@@ -62,6 +112,7 @@
                 {% endif %}
                 {% endwith %}
 
+            
             <table class="table table-hover table-dark" style = 'width: 100%;'>
                 <tr>
                     <th>Scientific Name</th>
@@ -85,13 +136,13 @@
                         <a href="/update/{{plants.scientific_name}}" class="btn btn-warning btn-xs" data-toggle="modal" 
                         data-target="#modaledit">Edit</a>
                         <a href="/plants_delete/{{plants.scientific_name}}" class="btn btn-danger btn-xs" 
-                        on-click="return confirm('Are You Sure?')">Delete</a>
+                        onclick="return confirm('Are You Sure You Want To Delete?')">Delete</a>
                     </td>
                 </tr>
 
 
-                <!-- Modal Edit Employee-->
-                <div id="modaledit{{plants.scientific_name}}" class="modal fade" role="dialog">
+                <!-- Modal Edit Plants-->
+                <div id="modaledit" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">

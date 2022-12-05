@@ -26,10 +26,6 @@
 
 }
 
-button:focus{
-    background-color: rgb(46, 113, 244);
-    color: white;
-}
 button{
     margin-right: 10px;
     margin-left: 10px;
@@ -58,4 +54,12 @@ h2{
 h1{
     text-align: center;
     font-size: 70px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+p{
+    font-size: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
 }

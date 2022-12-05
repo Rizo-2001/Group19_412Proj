@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link" href="/">Home</a>
-              <a class="nav-link " href="/park_rangers">Park Rangers</a>
+              <!-- <a class="nav-link " href="/park_rangers">Park Rangers</a> -->
               <a class="nav-link" href="/trails">Trails</a>
               <a class="nav-link active" href="/rivers">Rivers</a>
               <a class="nav-link" href="/geysers">Geysers</a>
@@ -66,7 +66,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Depth (ft)</th>
-                    <th>Is Active</th>
+                    <th>Lenght (mi)</th>
                     <th>Along Trail</th>
                     <th>Action</th>
                 </tr>
@@ -83,13 +83,13 @@
                         <a href="/rivers_update/{{rivers.river_name}}" class="btn btn-warning btn-xs" data-toggle="modal" 
                         data-target="#modaledit">Edit</a>
                         <a href="/rivers_delete/{{rivers.river_name}}" class="btn btn-danger btn-xs" 
-                        >Delete</a>
+                        onclick="return confirm('Are You Sure You Want To Delete?')">Delete</a>
                     </td>
                 </tr>
 
 
-                <!-- Modal Edit Employee-->
-                <div id="modaledit{{rivers.rivers_name}}" class="modal fade" role="dialog">
+                <!-- Modal Edit -->
+                <div id="modaledit" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">

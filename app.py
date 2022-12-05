@@ -2,7 +2,8 @@ from email.policy import default
 from os import environ
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-from numpy import average
+from numpy import average, may_share_memory
+from pkg_resources import safe_name
 
 app = Flask(__name__)
 app.secret_key = "Secret Key"
@@ -57,24 +58,6 @@ def insert():
 
         return redirect(url_for('animals'))
 
-@app.route('/update', methods = ['GET', 'POST'])
-def update():
-
-    if request.method == 'POST':
-        my_data = Animals.query.filter_by(a_scientific_name=request.form.get('a_scientific_name')).first()
-
-        my_data.scientific_name = request.form['a_scientific_name']
-        my_data.common_name = request.form['a_common_name']
-        my_data.diet = request.form['diet']
-        my_data.mating_season = request.form['mating_season']
-        my_data.population = request.form['population']
-        my_data.extinction_threat = request.form['endangerment']
-
-        db.session.commit()
-        flash("Animal Updated Successfully")
-
-        
-
 @app.route('/delete/<a_scientific_name>/', methods = ['GET', 'POST'])
 def delete(a_scientific_name):
     my_data = Animals.query.get(a_scientific_name)
@@ -84,6 +67,40 @@ def delete(a_scientific_name):
 
     return redirect(url_for('animals'))
 
+@app.route('/endangerment_filter1', methods = ['GET', 'POST'])
+def endangerment_filter1():
+    animals = Animals.query.filter_by(extinction_threat = 'Least Concern').all()
+    return render_template("animals.html", animals = animals)
+
+@app.route('/endangerment_filter2', methods = ['GET', 'POST'])
+def endangerment_filter2():
+    animals = Animals.query.filter_by(extinction_threat = 'Not Endangered').all()
+    return render_template("animals.html", animals = animals)
+
+@app.route('/endangerment_filter3', methods = ['GET', 'POST'])
+def endangerment_filter3():
+    animals = Animals.query.filter_by(extinction_threat = 'Threatened').all()
+    return render_template("animals.html", animals = animals)
+
+@app.route('/endangerment_filter4', methods = ['GET', 'POST'])
+def endangerment_filter4():
+    animals = Animals.query.filter_by(extinction_threat = 'Most Endangered').all()
+    return render_template("animals.html", animals = animals)
+
+@app.route('/diet_filter1', methods = ['GET', 'POST'])
+def diet_filter1():
+    animals = Animals.query.filter_by(diet = 'Carnivore').all()
+    return render_template("animals.html", animals = animals)
+
+@app.route('/diet_filter2', methods = ['GET', 'POST'])
+def diet_filter2():
+    animals = Animals.query.filter_by(diet = 'Omnivore').all()
+    return render_template("animals.html", animals = animals)
+
+@app.route('/diet_filter3', methods = ['GET', 'POST'])
+def diet_filter3():
+    animals = Animals.query.filter_by(diet = 'Herbivore').all()
+    return render_template("animals.html", animals = animals)
 #--------------Mammals-------------------------------------------------------------------------
 class Mammals(db.Model):
     m_scientific_name=db.Column(db.String, primary_key=True)
@@ -125,21 +142,24 @@ def mammal_insert():
 
         return redirect(url_for('mammals'))
 
-@app.route('/mammal_update', methods = ['GET', 'POST'])
-def mammal_update():
-
+@app.route('/mammals/<m_scientific_name>/mammal_update', methods = ['POST', 'GET'])
+def mammal_update(m_scientific_name):
+    mammal = Mammals.query.filter_by(m_scientific_name = m_scientific_name).first()
     if request.method == 'POST':
-        my_data = Mammals.query.get(request.form.get('m_scientific_name'))
+        if mammal:
+            db.session.delete(mammal)
+            db.session.commit()
 
-        my_data.s_name = request.form['scientific_name']
-        my_data.c_name = request.form['common_name']
-        my_data.hibernates = request.form['hibernates']
-        my_data.offspring_count = request.form['offspring_count']
+    return render_template('mammals.html')
+        # my_data.m_scientific_name = request.form['m_scientific_name']
+        # my_data.m_common_name = request.form['m_common_name']
+        # my_data.hibernates = request.form['hibernates']
+        # my_data.offspring_count = request.form['offspring_count']
 
-        db.session.commit()
-        flash("Mammal Updated Successfully")
+        # db.session.commit()
+        # flash("Mammal Updated Successfully")
 
-        return redirect(url_for('mammals'))
+        # return redirect(url_for('mammals'))
 
 @app.route('/mammal_delete/<m_scientific_name>/', methods = ['GET', 'POST'])
 def mammal_delete(m_scientific_name):
@@ -529,8 +549,19 @@ def plants_delete(scientific_name):
 
     return redirect(url_for('plants'))
 
+@app.route('/poison_filter1', methods = ['GET', 'POST'])
+def poison_filter1():
+    
+    animals = Plants.query.filter_by().all()
+    return render_template("plants.html", animals = animals)
+
+@app.route('/poison_filter2', methods = ['GET', 'POST'])
+def poison_filter2():
+    animals = Plants.query.filter_by(poisonous = False).all()
+    return render_template("plants.html", animals = animals)
+
 #--------------park_rangers-------------------------------------------------------------------------
-class ParkRangers(db.Model):
+class Park_Rangers(db.Model):
     ranger_name=db.Column(db.String, primary_key=True)
     age=db.Column(db.Integer)
     badge_num=db.Column(db.Integer)
@@ -542,7 +573,7 @@ class ParkRangers(db.Model):
 
 @app.route('/park_rangers')
 def park_rangers():
-    park_rangers = ParkRangers.query.all()
+    park_rangers = Park_Rangers.query.all()
     return render_template("park_rangers.html", park_rangers = park_rangers)
 
 
@@ -559,7 +590,7 @@ def park_rangers_insert():
         post_location = request.form['post_location']
 
 
-        my_data = ParkRangers(ranger_name, age, badge_num, num_of_years_worked, job_position, post_location, checkbox_bool, username)
+        my_data = Park_Rangers(ranger_name, age, badge_num, num_of_years_worked, job_position, post_location, checkbox_bool, username)
         db.session.add(my_data)
         db.session.commit()
 
@@ -571,7 +602,7 @@ def park_rangers_insert():
 def park_rangers_update():
 
     if request.method == 'POST':
-        my_data = ParkRangers.query.get(request.form.get('park_ranger_name'))
+        my_data = Park_Rangers.query.get(request.form.get('park_ranger_name'))
 
         my_data.ranger_name = request.form['park_ranger_name']
         my_data.age = request.form['age']
@@ -587,7 +618,7 @@ def park_rangers_update():
 
 @app.route('/park_rangers_delete/<park_ranger_name>/', methods = ['GET', 'POST'])
 def park_rangers_delete(park_ranger_name):
-    my_data = ParkRangers.query.get(park_ranger_name)
+    my_data = Park_Rangers.query.get(park_ranger_name)
     db.session.delete(my_data)
     db.session.commit()
     flash("Park Ranger Deleted Successfully")

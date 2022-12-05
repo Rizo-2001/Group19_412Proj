@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link" href="/">Home</a>
-              <a class="nav-link " href="/park_rangers">Park Rangers</a>
+              <!-- <a class="nav-link " href="/park_rangers">Park Rangers</a> -->
               <a class="nav-link" href="/trails">Trails</a>
               <a class="nav-link" href="/rivers">Rivers</a>
               <a class="nav-link" href="/geysers">Geysers</a>
@@ -80,25 +80,24 @@
                     <td>{{mammals.hibernates}}</td>
                     <td>{{mammals.offspring_count}}</td>
                     <td>
-                        <a href="/mammal_update/{{mammals.m_scientific_name}}" class="btn btn-warning btn-xs" data-toggle="modal" 
+                        <a href="/mammal_update" class="btn btn-warning btn-xs" data-toggle="modal" 
                         data-target="#modaledit">Edit</a>
                         <a href="/mammal_delete/{{mammals.m_scientific_name}}" class="btn btn-danger btn-xs" 
-                        on-click="return confirm('Are You Sure?')">Delete</a>
+                        onclick="return confirm('Are You Sure You Want To Delete?')">Delete</a>
                     </td>
                 </tr>
 
 
-                <!-- Modal Edit Employee-->
-                <div id="modaledit{{mammals.m_scientific_name}}" class="modal fade" role="dialog">
+                <!-- Modal Edit Mammals-->
+                <div id="modaledit" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">Edit Mammal</h4>
                             </div>
                             <div class="modal-body">
-                                <form action="{{url_for('mammal_update')}}" method="POST">
-                                    <div class="form-group">
-                                        <div class="form-group">
+                                <form action="" method="POST">
+                                        <div class="form-group" >
                                             <label for="m_scientific_name">Scientific Name</label>
                                             <input type="text" class="form-control" id="m_scientific_name" name="m_scientific_name" value="{{mammals.m_scientific_name}}">
                                         </div>
@@ -110,7 +109,7 @@
 
                                         <div class="form-group">
                                             <label for="hibernates">Hibernates</label>
-                                            <input type="checkbox" class="form-control" id="hibernates" name="hibernates" value="{{mammals.hibernates}}">
+                                            <input type="checkbox"  id="hibernates" name="hibernates" value="{{mammals.hibernates}}">
                                         </div>
 
                                         <div class="form-group">

@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-link" href="/">Home</a>
-              <a class="nav-link " href="/park_rangers">Park Rangers</a>
+              <!-- <a class="nav-link " href="/park_rangers">Park Rangers</a> -->
               <a class="nav-link" href="/trails">Trails</a>
               <a class="nav-link" href="/rivers">Rivers</a>
               <a class="nav-link" href="/geysers">Geysers</a>
@@ -37,7 +37,25 @@
   </div>
     <div class="fish">
         <div class="col md-12">
-
+            <div class="row">
+                <div class="col col-sm">
+                    <h3>Filter By Catch Size:</h3>
+                </div>
+                <div class="col col-sm">
+                    <input type="text" name="fish_size">
+                    <input type="submit">
+                </div>
+                <div class="col-sm">
+                    <a href="/fish_filter2" class="btn btn-danger btn-xs">Filter by Not Endangered</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/endangerment_filter3" class="btn btn-danger btn-xs">Filter by Threatened</a>
+                </div>
+                <div class="col-sm">
+                    <a href="/endangerment_filter4" class="btn btn-danger btn-xs">Filter by Most Endangered</a>
+                </div>
+            </div>
+            <div class="row">
             <h2>Manage <b>Fish </b>  <button type="button"  class="btn btn-success float-right"
                 data-toggle="modal" data-target="#mymodal">Add New Fish</button> </h2>
 
@@ -83,13 +101,13 @@
                         <a href="/update/{{fish.f_scientific_name}}" class="btn btn-warning btn-xs" data-toggle="modal" 
                         data-target="#modaledit">Edit</a>
                         <a href="/fish_delete/{{fish.f_scientific_name}}" class="btn btn-danger btn-xs" 
-                        on-click="return confirm('Are You Sure?')">Delete</a>
+                        onclick="return confirm('Are You Sure You Want To Delete?')">Delete</a>
                     </td>
                 </tr>
 
 
-                <!-- Modal Edit Employee-->
-                <div id="modaledit{{fish.f_scientific_name}}" class="modal fade" role="dialog">
+                <!-- Modal Edit Fish-->
+                <div id="modaledit" class="modal fade" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
