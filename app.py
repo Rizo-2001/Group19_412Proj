@@ -2,6 +2,7 @@ from email.policy import default
 from os import environ
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
+
 from numpy import average, may_share_memory
 from pkg_resources import safe_name
 
@@ -230,6 +231,21 @@ def fish_delete(f_scientific_name):
     flash("Fish Deleted Successfully")
 
     return redirect(url_for('fish'))
+
+@app.route('/catch_filter1', methods = ['GET', 'POST'])
+def catch_filter1():
+    fish = Fish.query.filter_by(legal_catch_season = 'January-December').all()
+    return render_template("fish.html", fish = fish)
+
+@app.route('/catch_filter2', methods = ['GET', 'POST'])
+def catch_filter2():
+    fish = Fish.query.filter_by(legal_catch_season = 'Can\'t Catch').all()
+    return render_template("fish.html", fish = fish)
+
+@app.route('/catch_filter3', methods = ['GET', 'POST'])
+def catch_filter3():
+    fish = Fish.query.filter((Fish.legal_catch_season = 'January-December') | (Fish.legal_catch_season = 'Can\'t Catch')))
+    return render_template("fish.html", fish = fish)
 #--------------trails-------------------------------------------------------------------------
 class Trails(db.Model):
     trail_name=db.Column(db.String, primary_key=True)
