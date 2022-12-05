@@ -80,7 +80,7 @@
                     <td>{{mammals.hibernates}}</td>
                     <td>{{mammals.offspring_count}}</td>
                     <td>
-                        <a href="/mammal_update" class="btn btn-warning btn-xs" data-toggle="modal" 
+                        <a href="/mammal_update/{{mammals.m_scientific_name}}" class="btn btn-warning btn-xs" data-toggle="modal" 
                         data-target="#modaledit">Edit</a>
                         <a href="/mammal_delete/{{mammals.m_scientific_name}}" class="btn btn-danger btn-xs" 
                         onclick="return confirm('Are You Sure You Want To Delete?')">Delete</a>
@@ -96,7 +96,7 @@
                                 <h4 class="modal-title">Edit Mammal</h4>
                             </div>
                             <div class="modal-body">
-                                <form action="" method="POST">
+                                <form action="/mammal_update/{{mammals.m_scientific_name}}" method="POST">
                                         <div class="form-group" >
                                             <label for="m_scientific_name">Scientific Name</label>
                                             <input type="text" class="form-control" id="m_scientific_name" name="m_scientific_name" value="{{mammals.m_scientific_name}}">

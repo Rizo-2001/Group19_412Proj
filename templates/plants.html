@@ -43,16 +43,16 @@
 
                 <div class="row">
                     <div class="col col-sm">
-                        <h3>Filter Poisonous:</h3>
+                        <h3>Filter by Environment:</h3>
                     </div>
                     <div class="col col-sm">
-                        <a href="/poison_filter1" class="btn btn-danger btn-xs">Filter by Poisonous</a>
+                        <a href="/environment_filter1" class="btn btn-danger btn-xs">Water</a>
                     </div>
                     <div class="col-sm">
-                        <a href="/poison_filter2" class="btn btn-danger btn-xs">Filter by Not Poisonous</a>
+                        <a href="/environment_filter2" class="btn btn-danger btn-xs">Land</a>
                     </div>
                     <div class="col-sm">
-                        
+                        <a href="/plants" class="btn btn-danger btn-xs">Clear Filters</a>
                     </div>
                     <div class="col-sm">
                         
@@ -60,37 +60,9 @@
 
                 </div>
                 <div class="row">
-        
+                    
                 </div>
-                <div class="row">
-                    <div class="col col-sm">
-                        <h3>Filter By Environment:</h3>
-                    </div>
-                    <div class="col col-sm">
-                        <a href="/diet_filter1" class="btn btn-danger btn-xs">Filter by Carnivore</a>
-                    </div>
-                    <div class="col-sm">
-                        <a href="/diet_filter2" class="btn btn-danger btn-xs">Filter by Omnivore</a>
-                    </div>
-                    <div class="col-sm">
-                        <a href="/diet_filter3" class="btn btn-danger btn-xs">Filter by Herbivore</a>
-                    </div>
-                    <div class="col-sm">
-                        
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col col-sm">
-                    </div>
-                    <div class="col col-sm"></div>
-                    <div class="col-sm"></div>
-                    <div class="col-sm">
-                    </div>
-                    <div class="col-sm">
-                        <a href="/animals" class="btn btn-danger btn-xs">Clear Filters</a>
-                    </div>
-        
-                </div>
+                
                 {% with messages = get_flashed_messages() %}
  
                 {% if messages %}

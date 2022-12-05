@@ -75,7 +75,7 @@
                 <a href="/diet_filter3" class="btn btn-danger btn-xs">Filter by Herbivore</a>
             </div>
             <div class="col-sm">
-                
+                <a href="/animals" class="btn btn-danger btn-xs">Clear Filters</a>
             </div>
         </div>
         <div class="row">
@@ -86,7 +86,7 @@
             <div class="col-sm">
             </div>
             <div class="col-sm">
-                <a href="/animals" class="btn btn-danger btn-xs">Clear Filters</a>
+                
             </div>
 
         </div>
@@ -157,7 +157,54 @@
 
 
             <!-- Modal Edit Animal-->
-            
+            <!-- Modal Edit Mammals-->
+            <div id="modaledit" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Mammal</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="POST">
+                                    <div class="form-group" >
+                                        <label for="a_scientific_name">Scientific Name</label>
+                                        <input type="text" class="form-control" id="a_scientific_name" name="m_scientific_name" value="{{animals.a_scientific_name}}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="a_common_name">Common Name</label>
+                                        <input type="text" class="form-control" id="a_common_name" name="m_common_name" value="{{animals.a_common_name}}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="diet">Diet</label>
+                                        <input type="checkbox"  id="diet" name="diet" value="{{animals.diet}}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="mating_season">Mating Season</label>
+                                        <input type="text" class="form-control" id="mating_season" name="mating_season" value="{{animals.mating_season}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="population">Population</label>
+                                        <input type="text" class="form-control" id="population" name="population" value="{{animals.population}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="extinction_threat">Extinction Threat</label>
+                                        <input type="text" class="form-control" id="extinction_threat" name="extinction_threat" value="{{animals.extinction_threat}}">
+                                    </div>
+                                    <div class="form-group"> <!--Closed?-->
+                                        <button class="btn btn-primary" type="submit">Update</button>
+
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
             {% endfor %}

@@ -1,4 +1,5 @@
 from email.policy import default
+from operator import and_
 from os import environ
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -58,6 +59,11 @@ def insert():
         flash("Animal Inserted Successfully")
 
         return redirect(url_for('animals'))
+
+@app.route('/update', methods = ['POST', 'GET'])
+def update():
+
+         return redirect(url_for('animals'))
 
 @app.route('/delete/<a_scientific_name>/', methods = ['GET', 'POST'])
 def delete(a_scientific_name):
@@ -143,15 +149,22 @@ def mammal_insert():
 
         return redirect(url_for('mammals'))
 
-@app.route('/mammals/<m_scientific_name>/mammal_update', methods = ['POST', 'GET'])
-def mammal_update(m_scientific_name):
-    mammal = Mammals.query.filter_by(m_scientific_name = m_scientific_name).first()
-    if request.method == 'POST':
-        if mammal:
-            db.session.delete(mammal)
-            db.session.commit()
 
-    return render_template('mammals.html')
+    # mammal = Mammals.query.filter_by(m_scientific_name = m_scientific_name).first()
+    # if request.method == 'POST':
+    #     if mammal:
+    #         db.session.delete(mammal)
+    #         db.session.commit()
+    #         m_scientific_name = request.form['scientific_name']
+    #         m_common_name = request.form['m_common_name']
+    #         hibernates = request.form['hibernates']
+    #         offspring_count = request.form['offspring_count']
+    #         mammal = Mammals(m_scientific_name= m_scientific_name, m_common_name=m_common_name, hibernates=hibernates,offspring_count=offspring_count)
+    #         db.session.add(mammal)
+    #         db.session.commit()
+    #         return redirect(url_for('mammals'))
+
+    # return render_template('mammals.html')
         # my_data.m_scientific_name = request.form['m_scientific_name']
         # my_data.m_common_name = request.form['m_common_name']
         # my_data.hibernates = request.form['hibernates']
@@ -170,6 +183,23 @@ def mammal_delete(m_scientific_name):
     flash("Mammal Deleted Successfully")
 
     return redirect(url_for('mammals'))
+
+@app.route('/mammal_update/<m_scientific_name>', methods = ['POST', 'GET'])
+def mammal_update(m_scientific_name):
+    mammals = Mammals.query.get_or_404(m_scientific_name)
+    if request.method == "POST":
+        mammals.m_scientific_name = request.form['m_scientific_name']
+        try:
+            db.session.commit()
+   # my_data = Mammals.query.get(m_scientific_name)
+    #db.session.delete(my_data)
+    #db.session.commit()
+    #flash("Mammal Deleted Successfully")
+            return redirect(url_for('mammals'))
+        except: 
+            return "Cannot update mammal"
+    else:
+        return render_template('mammals.html', m_scientific_name = m_scientific_name)
 
 #--------------fish-------------------------------------------------------------------------
 class Fish(db.Model):
@@ -244,7 +274,7 @@ def catch_filter2():
 
 @app.route('/catch_filter3', methods = ['GET', 'POST'])
 def catch_filter3():
-    fish = Fish.query.filter((Fish.legal_catch_season = 'January-December') | (Fish.legal_catch_season = 'Can\'t Catch')))
+    fish = Fish.query.filter(and_(Fish.legal_catch_season != 'January-December',Fish.legal_catch_season != 'Can\'t Catch'))
     return render_template("fish.html", fish = fish)
 #--------------trails-------------------------------------------------------------------------
 class Trails(db.Model):
@@ -565,16 +595,16 @@ def plants_delete(scientific_name):
 
     return redirect(url_for('plants'))
 
-@app.route('/poison_filter1', methods = ['GET', 'POST'])
-def poison_filter1():
+@app.route('/environment_filter1', methods = ['GET', 'POST'])
+def environment_filter1():
     
-    animals = Plants.query.filter_by().all()
-    return render_template("plants.html", animals = animals)
+    plants = Plants.query.filter_by(environment = 'Water')
+    return render_template("plants.html", plants = plants)
 
-@app.route('/poison_filter2', methods = ['GET', 'POST'])
-def poison_filter2():
-    animals = Plants.query.filter_by(poisonous = False).all()
-    return render_template("plants.html", animals = animals)
+@app.route('/environment_filter2', methods = ['GET', 'POST'])
+def environment_filter2():
+    plants = Plants.query.filter_by(environment = 'Land').all()
+    return render_template("plants.html", plants = plants)
 
 #--------------park_rangers-------------------------------------------------------------------------
 class Park_Rangers(db.Model):
