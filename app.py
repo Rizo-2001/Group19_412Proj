@@ -3,7 +3,6 @@ from os import environ
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from numpy import average, may_share_memory
-from pkg_resources import safe_name
 
 app = Flask(__name__)
 app.secret_key = "Secret Key"
